@@ -1,0 +1,109 @@
+\PassOptionsToPackage{main=english, brazilian}{babel}
+
+\documentclass[
+	% -- opções da classe memoir --
+	12pt,				% tamanho da fonte
+	openright,			% capítulos começam em pág ímpar (insere página vazia caso preciso)
+	oneside,			% para impressão em recto e verso. Oposto a oneside
+	a4paper			% tamanho do papel
+	]{abntex2}
+% ---
+% Pacotes básicos 
+% ---
+\usepackage{lmodern} % usa a fonte Latin Modern		
+\usepackage[T1]{fontenc} % seleção de codigos de fonte.
+\usepackage[utf8]{inputenc} % codificação do documento (conversão automática dos acentos)
+\usepackage{indentfirst}% indenta o primeiro parágrafo de cada seção.
+\usepackage{color} % controle das cores
+\usepackage{graphicx} % unclusão de gráficos
+\usepackage{microtype} % para melhorias de justificação
+\usepackage[brazilian,hyperpageref]{backref} % páginas com as citações na bibl
+\usepackage[alf]{abntex2cite} % citações padrão ABNT
+\usepackage{lipsum} % geração de dummy text
+\usepackage{ppgmae_config} % configurações específicas do modelo do PPgMAE (no geral, esse arquivo não deve ser modificado)
+
+\usepackage{amssymb,amsmath} % align*
+\usepackage{amsthm} % \theoremstyle
+\usepackage{mycommands}
+
+\begin{document}
+% Retira espaço extra obsoleto entre as frases.
+\frenchspacing 
+
+% ----------------------------------------------------------
+% ELEMENTOS PRÉ-TEXTUAIS
+% ----------------------------------------------------------
+\pretextual
+
+% Capa
+% \imprimircapa
+
+% Folha de rosto
+% (o * indica que haverá a ficha bibliográfica)
+% \imprimirfolhaderosto*
+
+% Ficha bibliográfica
+% \include{pre_texto/ficha_bibliografica}
+
+% Erratas
+% \include{pre_texto/errata}
+
+% Folha de aprovação
+% \include{pre_texto/folha_aprovacao}
+
+% Dedicatória
+% \include{pre_texto/dedicatoria}
+
+% Agradecimentos
+% \include{pre_texto/agradecimentos}
+
+% Epígrafe
+% \include{pre_texto/epigrafe}
+
+% Resumo em português
+% \include{pre_texto/resumo}
+
+% Resumo em inglês
+% \include{pre_texto/abstract}
+
+% Lista de ilustrações
+% \inserirlistailustracoes
+
+% Lista de quadros
+% \inserirlistaquadros
+
+% Lista de tabelas
+% \inserirlistatabelas
+
+% Lista de abreviaturas e siglas
+\include{pre_texto/abreviaturas}
+
+% Lista de símbolos
+% \include{pre_texto/simbolos}
+
+% Sumário
+\inserirsumario
+
+% ----------------------------------------------------------
+% ELEMENTOS TEXTUAIS
+% ----------------------------------------------------------
+\textual
+
+\include{texto/introduction}
+\include{texto/preliminaries}
+
+% ----------------------------------------------------------
+% ELEMENTOS PÓS-TEXTUAIS
+% ----------------------------------------------------------
+\postextual
+
+% Referências bibliográficas
+\bibliography{referencias}
+
+% Apêndices
+% \include{pos_texto/apendices}
+
+% Anexos
+% \include{pos_texto/anexos}
+
+\end{document}

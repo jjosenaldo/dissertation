@@ -1,0 +1,44 @@
+% Textual
+\newcommand{\etc}{\ldots}
+\newcommand{\paren}[1]{\left(#1\right)}
+
+% Misc logic
+\renewcommand{\phi}{\varphi}
+\newcommand{\bnfdef}{\mathrel{::=}}
+\newcommand{\assign}{\mathrel{:=}}
+\newcommand{\liff}{\leftrightarrow}
+
+% PDL
+\newcommand{\possib}[2]{\langle #1 \rangle #2}
+\newcommand{\necess}[2]{[#1] #2}
+\newcommand{\comp}{\mathrel{;}}
+\newcommand{\iter}[1]{#1^*}
+\newcommand{\choice}{\cup}
+\newcommand{\test}[1]{#1?}
+
+
+% Theorem-like environments
+% TODO: what's the correct numbering?
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{theorem}[definition]{Teorema}
+\newtheorem{corollary}{Corolário}
+\newtheorem{example}[definition]{Exemplo} 
+\newtheorem*{onlineact}{Atividade online}
+\newtheorem*{tve}{TV Elementar}
+\newtheorem{problem}[definition]{Problema}
+\newtheorem{proposition}[definition]{Proposição} 
+\newtheorem{equivalence}[definition]{Equivalência}
+\newtheorem{exercise}{Exercício}
+\counterwithin*{exercise}{section}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Observação}
+\newtheorem*{hint}{Dica}
+\newtheorem*{solution}{Solução}
+
+\newtheorem{challenge}{Desafio}
+\counterwithin*{challenge}{section}
+
+\theoremstyle{plain}
+\newtheorem{lemma}[definition]{Lema} 

@@ -1,0 +1,243 @@
+% --------------------------------------------------------------------
+% METADATA
+% --------------------------------------------------------------------
+
+% Dados inerentes ao PPgMAE
+\instituicao{%
+  Universidade Federal do Rio Grande do Norte
+  \par
+  Centro de Ciências Exatas e da Terra
+  \par
+  Programa de Pós-Graduação em Matemática Aplicada e Estatística
+  \par
+  Mestrado em Matemática Aplicada e Estatística%
+  }
+\tipotrabalho{Dissertação (Mestrado)}
+\preambulo{Trabalho apresentado ao Programa de Pós-Graduação em Matemática Aplicada e Estatística da Universidade Federal do Rio Grande do Norte, em cumprimento com as exigências legais para obtenção do título de Mestre.\\
+Área de Concentração: \imprimirareaconcentracao.\\
+Linha de Pesquisa: \imprimirlinhadepesquisa.}
+
+% Define os comandos \areaconcentracao e \linhadepesquisa, os quais o aluno
+% deve especificar
+\providecommand{\imprimirareaconcentracao}{}
+\newcommand{\areaconcentracao}[1]{\renewcommand{\imprimirareaconcentracao}{#1}}
+\providecommand{\imprimirlinhadepesquisa}{}
+\newcommand{\linhadepesquisa}[1]{\renewcommand{\imprimirlinhadepesquisa}{#1}}
+
+% Altera um pouco o comando \orientador, provido pelo abntex2
+% \renewcommand{\orientador}[2][\orientadorname]%
+%   {\renewcommand{\imprimirorientadorRotulo}{#1}
+%   \renewcommand{\imprimirorientador}{\\#2}}
+
+\newcommand{\rotuloorientador}{Orientador}
+\renewcommand{\orientador}[2][\rotuloorientador]%
+  {\renewcommand{\imprimirorientadorRotulo}{#1}%
+   \renewcommand{\imprimirorientador}{#2}}
+   
+% \providecommand{\imprimirrotuloorientador}{}
+% \newcommand{\rotuloorientador}[1]{\renewcommand{\imprimirrotuloorientador}{#1}}
+% \renewcommand{\orientadorname}{\imprimirrotuloorientador}
+
+
+
+% Introdução da folha de aprovação
+\newcommand{\introducaofolhadeaprovacao}{Dissertação de Mestrado sob o título \textit{\imprimirtitulo{}} apresentada
+por \imprimirautor{} e aceita pelo Programa de Pós-Graduação em
+Matemática Aplicada e Estatística da Universidade Federal do Rio Grande do Norte,
+sendo aprovada por todos os membros da banca examinadora abaixo especificada:}
+
+
+\newcommand{\inserirlistaquadros}{
+\pdfbookmark[0]{\listofquadrosname}{loq}
+\listofquadros*
+\cleardoublepage}
+
+\newcommand{\inserirlistatabelas}{
+\pdfbookmark[0]{\listtablename}{lot}
+\listoftables*
+\cleardoublepage}
+
+\newcommand{\inserirlistailustracoes}{
+\pdfbookmark[0]{\listfigurename}{lof}
+\listoffigures*
+\cleardoublepage}
+
+\newcommand{\inserirsumario}{
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents*
+\cleardoublepage}
+
+\newcommand{\indiceremissivo}{\phantompart\printindex}
+
+% Mudar fonte dos títulos de capítulos, seções etc
+\renewcommand{\ABNTEXchapterfont}{\rmfamily}
+
+% Customizar capa
+\renewcommand{\imprimircapa}{%
+  \begin{capa}%
+    \center
+    \begin{minipage}{2cm}
+		\begin{center}
+			\includegraphics[width=1.7cm, height=2.0cm]{figuras/Brasao-UFRN.jpg}
+		\end{center}
+	\end{minipage}
+	\begin{minipage}{11cm}
+		\begin{center}
+		\ABNTEXchapterfont\large\imprimirinstituicao
+		\end{center}
+	\end{minipage}
+	\begin{minipage}{2cm}
+		\begin{center}
+			\includegraphics[width=1.8cm, height=1.5cm]{figuras/Logotipo-PPgmae.jpg}
+		\end{center}
+	\end{minipage}
+
+    \vfill
+    \begin{center}
+    \ABNTEXchapterfont\bfseries\LARGE\imprimirtitulo
+    \end{center}
+    \vfill
+    \imprimirautor
+    \vfill
+    \large\imprimirlocal
+
+    \large\imprimirdata
+    
+    \vspace*{1cm}
+  \end{capa}
+}
+
+% Customizar folha de rosto
+\makeatletter
+\renewcommand{\folhaderostocontent}{
+  \begin{center}
+
+    {\ABNTEXchapterfont\large\imprimirautor}
+	
+    \vspace*{\fill}\vspace*{\fill}
+    \begin{center}
+      \ABNTEXchapterfont\bfseries\Large\imprimirtitulo
+    \end{center}
+    \vspace*{\fill}
+	
+    \abntex@ifnotempty{\imprimirpreambulo}{%
+      \hspace{.45\textwidth}
+      \begin{minipage}{.5\textwidth}
+      	\SingleSpacing
+         \imprimirpreambulo
+       \end{minipage}%
+       \vspace*{\fill}
+    }%
+
+    {\abntex@ifnotempty{\imprimirinstituicao}{\large\imprimirinstituicao\vspace*{\fill}}}
+
+    {\large\imprimirorientadorRotulo\\\imprimirorientador\par}
+    \abntex@ifnotempty{\imprimircoorientador}{%
+       {\large\imprimircoorientadorRotulo~\imprimircoorientador}%
+    }%
+    \vspace*{\fill}
+
+    {\large\imprimirlocal}
+    \par
+    {\large\imprimirdata}
+    \vspace*{1cm}
+
+  \end{center}
+}
+\makeatother
+
+% Idiomas
+\newif\ifptbr
+\newif\ifen
+\newcommand{\langptbr}[1]{%
+   \ifptbr\foreignlanguage{brazilian}#1\fi}
+\newcommand{\langen}[1]{%
+   \ifen\foreignlanguage{english}#1\fi}
+
+% Configurações do pacote backref
+% Usado sem a opção hyperpageref de backref
+\renewcommand{\backrefpagesname}{Citado na(s) página(s):~}
+% Texto padrão antes do número das páginas
+\renewcommand{\backref}{}
+% Define os textos da citação
+\renewcommand*{\backrefalt}[4]{
+	\ifcase #1 %
+		Nenhuma citação no texto.%
+	\or
+		Citado na página #2.%
+	\else
+		Citado #1 vezes nas páginas #2.%
+	\fi}%
+	
+% Posiciona figuras e tabelas no topo da página quando adicionadas sozinhas
+% em um página em branco. Ver https://github.com/abntex/abntex2/issues/170
+\makeatletter
+\setlength{\@fptop}{5pt} % Set distance from top of page to first float
+\makeatother
+
+% Possibilita criação de Quadros e Lista de quadros.
+% Ver https://github.com/abntex/abntex2/issues/176
+%
+\newcommand{\quadroname}{\langen{Frame}\langptbr{Quadro}}
+\newcommand{\listofquadrosname}{\langen{List of frames}\langptbr{Lista de quadros}}
+
+\newfloat[chapter]{quadro}{loq}{\quadroname}
+\newlistof{listofquadros}{loq}{\listofquadrosname}
+\newlistentry{quadro}{loq}{0}
+
+% configurações para atender às regras da ABNT
+\setfloatadjustment{quadro}{\centering}
+\counterwithout{quadro}{chapter}
+\renewcommand{\cftquadroname}{\quadroname\space} 
+\renewcommand*{\cftquadroaftersnum}{\hfill--\hfill}
+
+\setfloatlocations{quadro}{hbtp} % Ver https://github.com/abntex/abntex2/issues/176
+
+% O tamanho do parágrafo é dado por:
+\setlength{\parindent}{1.3cm}
+
+% Controle do espaçamento entre um parágrafo e outro:
+\setlength{\parskip}{0.2cm}  % tente também \onelineskip
+
+% Alterando o aspecto da cor azul
+\definecolor{blue}{RGB}{41,5,195}
+
+% Ajusta o espaçamento dos parágrafos do resumo
+\setlength{\absparsep}{18pt} 
+
+	
+\makeatletter
+\hypersetup{
+     	%pagebackref=true,
+		pdftitle={\@title}, 
+		pdfauthor={\@author},
+    	pdfsubject={\imprimirpreambulo},
+	    pdfcreator={LaTeX with abnTeX2},
+		pdfkeywords={abnt}{latex}{abntex}{abntex2}{trabalho acadêmico}, 
+		colorlinks=true,       		% false: boxed links; true: colored links
+    	linkcolor=blue,          	% color of internal links
+    	citecolor=blue,        		% color of links to bibliography
+    	filecolor=magenta,      		% color of file links
+		urlcolor=blue,
+		bookmarksdepth=4
+}
+\makeatother
+
+% Resolve o warning descrito em: https://github.com/abntex/abntex2/issues/133
+\renewcommand{\PRIVATEapendiceconfig}[2]{%
+ \setboolean{abntex@apendiceousecao}{true}%
+ \renewcommand{\appendixname}{#1}
+ \ifthenelse{\boolean{ABNTEXsumario-abnt-6027-2012}}{
+   \renewcommand{\appendixtocname}{\texorpdfstring{\MakeTextUppercase{#2}}{#2}}
+  }{%
+  \renewcommand{\appendixtocname}{#2}} 
+ \renewcommand{\appendixpagename}{#2}
+ \switchchapname{#1}% Corrected from \switchapname -> \switchchapname
+ \renewcommand*{\cftappendixname}{#1 \space}
+}
+
+% Compila o índice
+\makeindex
+
+% Informações como título do trabalho, autor etc
+\input{metadata}

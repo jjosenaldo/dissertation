@@ -1,0 +1,61 @@
+\section{Propositional Dynamic Logic}
+Propositional Dynamic Logic (PDL), as its name suggests, is the propositional counterpart of dynamic logic. The latter has its origins in 
+%TODO: o livro lá de DL
+[], and it was created with the goal of reasoning about imperative computer programs.
+
+\subsection{Language}
+
+The language of PDL has two kinds of expressions: formulas and programs. The former will be usually represented by $\phi$, $\psi$, $\gamma$, \etc, and the variables $\pi_1, \pi_2, \etc$ range over programs.
+
+\begin{definition}
+The set $\Phi$ of formulas consists of a countable number of propositional variables $p_1, p_2,\dots$ plus the following grammar:
+%
+\begin{align*}
+    \phi & \bnfdef \bot \mid \phi \land \psi \mid \phi \to \psi
+    \mid \necess{\pi}{\varphi} \mid \possib{\pi}{\varphi}.
+\end{align*}
+We can introduce the remaining  connectives $\lor$, $\lnot$ and $\liff$ of classical logic by means of the abbreviations $\lnot \phi \assign \phi \to \bot$, $\phi \lor \psi \assign (\phi \to \bot)\to \psi$ and $\phi \liff \psi \assign \phi \to \psi \land \psi \to \phi$. Note that the program-free formulas are precisely the formulas of Classical Propositional Logic (CPL). Thus, PDL is an extension of CPL.
+\end{definition}
+
+An informal account of $\necess \pi \phi$ is that the formula $\phi$ is \emph{necessarily} true after the execution of the program $\pi$. As for $\possib\pi\phi$, it intuitively means that $\phi$ may be true --- or, rather, is \emph{possibly} true --- after $\pi$ finishes its execution. 
+It turns out that necessity and possibility are dual notions: for every $\phi$ and $\pi$, it is the case that $\possib{\pi}{\phi} = \lnot \necess\pi{\lnot \phi}$ and $\necess{\pi}{\phi} = \lnot \possib\pi{\lnot \phi}$. This shall be verified later, when we introduce the rules of the logic.
+
+The operators $\necess{\ }{}$ and $\possib{\ }{}$ are also often referred to as \emph{box} and \emph{diamond}, respectively. The resemblance with the modalities of modal logic is not a casualty: PDL is a multimodal logic. Each program $\pi$ gives rise to the modalities $\necess{\pi}{}$ and $\possib{\pi}{}$.
+
+\begin{definition}
+The set $\Pi$ of  PDL programs is composed of countable many atomic programs $a_1$, $a_2$,~\etc, and the following grammar:
+%
+\begin{align*}
+    \pi & \bnfdef \pi_1\comp \pi_2 \mid \pi_1\choice \pi_2 \mid \iter \pi_1 \mid \test \phi
+\end{align*}
+\end{definition}
+%
+The program $\pi_1\comp \pi_2$ is the sequential composition of $\pi_1$ and $\pi_2$, i.e., the output of $\pi_1$ is used as the input of $\pi_2$. As for $\pi_1 \choice \pi_2$, it either behaves as $\pi_1$ or $\pi_2$; such choice being nondeterministic. The idea of repetition of repetition is captured by $\iter \pi_1$, which is read as executing $\pi_1$ a nondeterministic number of times. Lastly, the command $\phi?$ halts the execution of the main program if $\phi$ is false and goes to the next instruction otherwise.
+
+\subsection{Deductive System}
+One way of defining a deductive system for PDL is by a Hilbert-style axiom schemes and some deduction rules. We present here the system given in \cite{harel2001dl}.
+
+\begin{definition}
+The PDL axioms are:
+\begin{enumerate}
+    \item All axioms of CPL, %TODO: maybe every CPL-valid formula should be a PDL axiom
+    \item $\necess{\alpha}{\paren{{\phi \to \psi}}} \to \paren{\necess\alpha\phi \to \necess\alpha\psi}$,
+    \item $\necess\alpha{\paren{\phi\land\psi}} \liff \necess\alpha\phi \land \necess\alpha\psi$,
+    \item $\necess{\alpha\choice\beta}\phi \liff \necess\phi\land\necess\beta\phi$,
+    \item $\necess{\alpha\comp\beta}\liff\necess\alpha{\necess\beta\phi}$,
+    \item $\necess{\test\psi}\phi\liff(\psi\to\phi)$,
+    \item $\phi\land\necess{\alpha}{\necess{\iter\alpha}\phi} \liff \necess{\iter \alpha}\phi$,
+    \item $\phi\land\necess{\iter\alpha}{\paren{\phi\to\necess\alpha\phi}}\to\necess{\iter\alpha}\phi$.
+\end{enumerate}
+Besides, PDL has the following rules:
+\begin{enumerate}
+    \item 
+\end{enumerate}
+\end{definition}
+
+
+% what was DL created for
+% two types of expressions: formulas and programs
+% syntax
+% modality
+% kripke semantics
