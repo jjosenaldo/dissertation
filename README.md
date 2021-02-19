@@ -1,0 +1,1 @@
+Welcome to my dissertation! At the present moment, the only things it is sure to be about are Propositional Dynamic Logic and Linear Logic. It doesn't even have a title yet, and I suspect that that will be something I'll only worry about way later lol.
