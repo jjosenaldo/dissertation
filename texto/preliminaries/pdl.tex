@@ -1,6 +1,6 @@
 \section{Propositional Dynamic Logic}
 Propositional Dynamic Logic (PDL), as its name suggests, is the propositional counterpart of dynamic logic. The latter has its origins in 
-%TODO: o livro lá de DL
+%TODO: search for the appropriate reference
 [], and it was created with the goal of reasoning about imperative computer programs.
 
 \subsection{Language}
@@ -11,10 +11,10 @@ The language of PDL has two kinds of expressions: formulas and programs. The for
 The set $\Phi$ of formulas consists of a countable number of propositional variables $p_1, p_2,\dots$ plus the following grammar:
 %
 \begin{align*}
-    \phi & \bnfdef \bot \mid \phi \land \psi \mid \phi \to \psi
-    \mid \necess{\pi}{\varphi} \mid \possib{\pi}{\varphi}.
+    \phi & \bnfdef \bot \mid \lnot\phi \mid \phi \land \psi \mid \phi \to \psi
+    \mid \phi \liff  \psi\mid \necess{\pi}{\phi} \mid \possib{\pi}{\phi}.
 \end{align*}
-We can introduce the remaining  connectives $\lor$, $\lnot$ and $\liff$ of classical logic by means of the abbreviations $\lnot \phi \assign \phi \to \bot$, $\phi \lor \psi \assign (\phi \to \bot)\to \psi$ and $\phi \liff \psi \assign \phi \to \psi \land \psi \to \phi$. Note that the program-free formulas are precisely the formulas of Classical Propositional Logic (CPL). Thus, PDL is an extension of CPL.
+We can introduce the remaining  connective $\lor$ via the abbreviation $\phi \lor \psi \assign (\phi \to \bot)\to \psi$. Note that the program-free formulas are precisely the formulas of Classical Propositional Logic (CPL). Thus, PDL is an extension of CPL.
 \end{definition}
 
 An informal account of $\necess \pi \phi$ is that the formula $\phi$ is \emph{necessarily} true after the execution of the program $\pi$. As for $\possib\pi\phi$, it intuitively means that $\phi$ may be true --- or, rather, is \emph{possibly} true --- after $\pi$ finishes its execution. 
@@ -33,26 +33,150 @@ The set $\Pi$ of  PDL programs is composed of countable many atomic programs $a_
 The program $\pi_1\comp \pi_2$ is the sequential composition of $\pi_1$ and $\pi_2$, i.e., the output of $\pi_1$ is used as the input of $\pi_2$. As for $\pi_1 \choice \pi_2$, it either behaves as $\pi_1$ or $\pi_2$; such choice being nondeterministic. The idea of repetition of repetition is captured by $\iter \pi_1$, which is read as executing $\pi_1$ a nondeterministic number of times. Lastly, the command $\phi?$ halts the execution of the main program if $\phi$ is false and goes to the next instruction otherwise.
 
 \subsection{Deductive System}
-One way of defining a deductive system for PDL is by a Hilbert-style axiom schemes and some deduction rules. We present here the system given in \cite{harel2001dl}.
+One way of defining a deductive system for PDL is by a Hilbert-style axiom scheme and some deduction rules. A slight modification of the system given in \cite{harel2001dl} is presented here. We have chosen a natural deduction set of rules for instances of CPL formulas because it is more readable.
 
 \begin{definition}
 The PDL axioms are:
-\begin{enumerate}
-    \item All axioms of CPL, %TODO: maybe every CPL-valid formula should be a PDL axiom
+\begin{enumerate}[label=({A\arabic*})]
     \item $\necess{\alpha}{\paren{{\phi \to \psi}}} \to \paren{\necess\alpha\phi \to \necess\alpha\psi}$,
     \item $\necess\alpha{\paren{\phi\land\psi}} \liff \necess\alpha\phi \land \necess\alpha\psi$,
     \item $\necess{\alpha\choice\beta}\phi \liff \necess\phi\land\necess\beta\phi$,
     \item $\necess{\alpha\comp\beta}\liff\necess\alpha{\necess\beta\phi}$,
     \item $\necess{\test\psi}\phi\liff(\psi\to\phi)$,
     \item $\phi\land\necess{\alpha}{\necess{\iter\alpha}\phi} \liff \necess{\iter \alpha}\phi$,
-    \item $\phi\land\necess{\iter\alpha}{\paren{\phi\to\necess\alpha\phi}}\to\necess{\iter\alpha}\phi$.
+    \item \label{item:pdlaxiom_induction} $\phi\land\necess{\iter\alpha}{\paren{\phi\to\necess\alpha\phi}}\to\necess{\iter\alpha}\phi$, or the \emph{induction} axiom.
 \end{enumerate}
-Besides, PDL has the following rules:
-\begin{enumerate}
-    \item 
-\end{enumerate}
+As for deduction rules, we consider the instances of natural deduction rules of CPL plus the GEN rule:
+%
+\begin{displaymath}
+\prftree[r]{GEN}{\phi}{\necess{\alpha}{\phi}}
+\end{displaymath}
+%
+In the GEN rule, $\phi$ is required to be a theorem of PDL.
 \end{definition}
 
+In order to see the deductive system in action, let us now derive some rules and theorems.
+
+\begin{example}[Admissibiblity of MON]
+The MON rule, whose name stands for \emph{monotonicity}, is the following scheme:
+\begin{displaymath}
+\prftree[r]{MON}{\phi \to \psi}{\necess{\alpha}{\phi} \to \necess{\alpha}{\psi}}
+\end{displaymath}
+%
+Its admissibility can be shown by means of the following deduction tree:
+%
+\begin{displaymath}
+\prftree[r]{MP}{
+\prfbyaxiom{A1}{
+\necess{\alpha}{(\phi \to \psi)} \to (\necess{\alpha}{\phi} \to \necess{\alpha}{\psi})
+}
+}{
+\prftree[r]{NEC}{\phi \to \psi}{
+\necess{\alpha}{(\phi \to \psi)}
+}
+}{
+\necess{\alpha}{\phi} \to \necess{\alpha}{\psi}
+}
+\end{displaymath}
+\end{example}
+
+\begin{example}[Admissibility of LI]
+Other admissible rule in PDL is the LI rule --- its name is a short for \emph{loop invariant} ---:
+%
+\begin{displaymath}
+\prftree[r]{LI}{\phi \to \necess{\alpha}{\phi}}{
+\phi \to \necess{\iter \alpha}{\phi}
+}
+\end{displaymath}
+%
+Here is a proof that the aforementioned rule is indeed admissible:
+% I guess that this redness is just a bug in the syntax highlighter of Overleaf, as no warnings or compilation errors are thrown.
+\begin{displaymath}
+\prftree[r]{$\to\text{I}_{\prfref<assum:A>}$}{
+\prfboundedstyle=1
+\prftree[r]{$\to\text{E}$}{
+\prfbyaxiom{A7}{\phi \land \necess{\iter \alpha}{\paren{\phi \to \necess{\alpha}{\phi}}} \to \necess{\iter \alpha}{\phi}}
+}{
+\prftree[r]{$\land\text{I}$}{
+\prfboundedassumption<assum:A>{\phi }
+}{
+\prftree[r]{NEC}{
+\prfassumption{\phi \to \necess{\alpha}{\phi}}
+}{
+\necess{\iter \alpha}{\paren{\phi \to \necess{\alpha}{\phi}}}
+}
+}{
+\phi \land \necess{\iter \alpha}{\paren{\phi \to \necess{\alpha}{\phi}}}
+}
+}{
+\necess{\iter \alpha}{\phi}
+}
+}{
+\phi \to \necess{\iter \alpha}{\phi}
+}
+\end{displaymath}
+\end{example}
+
+\begin{example}
+The formula $\necess{\iter \alpha}{\phi} \to \necess{\alpha}{\phi}$ is a theorem of PDL. This fact can be proved using the MON rule:
+%
+\begin{displaymath}
+\begin{prfenv}
+\prftree[r]{$\to\text{I}_{\prfref<assum:x>}$}{
+\prfboundedstyle=1
+\prftree[r]{$\to\text{E}$}{
+\prftree[r]{MON}{
+\prftree[r]{$\to\text{I}_{\prfref<assum:y>}$}{
+\prftree[r]{$\land\text{E}$}{
+\prftree[r]{$\liff\text{E}$}{
+\prfbyaxiom{A6}{\phi \land \necess{\alpha}{\necess{\iter \alpha}{\phi}} \liff \necess{\iter \alpha}{\phi}}
+}{
+\prfboundedassumption<assum:y>{\necess{\iter \alpha}{\phi}}
+}{
+\phi \land \necess{\iter \alpha}{\necess{\iter \alpha}{\phi}}
+}
+}{
+\phi
+}
+}{
+\necess{\iter \alpha}{\phi} \to \phi
+}
+}{
+\necess{\alpha}{\necess{\iter \alpha}{\phi}} \to \necess{\alpha}{\phi}
+}
+}{
+\prftree[r]{$\to\text{E}$}{
+\prftree[r]{$\to\text{I}_{\prfref<assum:z>}$}{
+\prftree[r]{$\land\text{E}$}{
+\prftree[r]{$\liff\text{E}$}{
+\prfbyaxiom{A6}{\phi \land \necess{\alpha}{\necess{\iter \alpha}{\phi}} \liff \necess{\iter \alpha}{\phi}}
+}{
+\prfboundedassumption<assum:z>{\necess{\iter \alpha}{\phi}}
+}{
+\phi \land \necess{\alpha}{\necess{\iter \alpha}{\phi}}
+}
+}{
+\necess{\alpha}{\necess{\iter \alpha}{\phi}}
+}
+}{
+\necess{\iter \alpha}{\phi} \to \necess{\alpha}{\necess{\iter \alpha}{\phi}}
+}
+}{
+\prfboundedassumption<assum:x>{\necess{\iter \alpha}{\phi}}
+}{
+\necess{\alpha}{\necess{\iter \alpha}{\phi}}
+}
+}{
+\necess{\alpha}{\phi}
+}
+}{
+\necess{\iter \alpha}{\phi} \to \necess{\alpha}{\phi}
+}
+\end{prfenv}
+\end{displaymath}
+\end{example}
+
+\subsubsection{Semantics}
 
 % what was DL created for
 % two types of expressions: formulas and programs
